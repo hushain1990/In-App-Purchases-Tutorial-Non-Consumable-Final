@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="InAppPurchases_Exercise" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ycv-EM-EgW">
+                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="kHY-QX-MAm"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Si2-Qg-tJG"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In-App Purchases Tutorial" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B92-XT-5QA">
+                                <rect key="frame" x="15" y="38" width="344" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="lb4-57-APM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Products from the store will be loaded here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMN-lj-5B6">
+                                <rect key="frame" x="16" y="70" width="343" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="Uln-8l-oTo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.14192708330000001" green="0.14192708330000001" blue="0.14192708330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="VqK-Ct-1la">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.28613072029999997" green="0.28613072029999997" blue="0.28613072029999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="VqK-Ct-1la" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1MN-Cp-2Rn"/>
+                            <constraint firstItem="B92-XT-5QA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="15" id="1zC-du-Hit"/>
+                            <constraint firstItem="VqK-Ct-1la" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="4jZ-mU-2aI"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ycv-EM-EgW" secondAttribute="bottom" id="Ui5-H1-kcK"/>
+                            <constraint firstItem="B92-XT-5QA" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="18" id="Vcj-zU-LHa"/>
+                            <constraint firstItem="wMN-lj-5B6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="WQ8-XP-0vr"/>
+                            <constraint firstAttribute="trailing" secondItem="Ycv-EM-EgW" secondAttribute="trailing" id="exB-fb-bPI"/>
+                            <constraint firstItem="wMN-lj-5B6" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="fCv-VI-pLI"/>
+                            <constraint firstItem="Ycv-EM-EgW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="100" id="hVD-Pe-EQs"/>
+                            <constraint firstAttribute="trailing" secondItem="B92-XT-5QA" secondAttribute="trailing" constant="16" id="lqT-qA-EWR"/>
+                            <constraint firstItem="wMN-lj-5B6" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="omJ-8r-rJK"/>
+                            <constraint firstItem="Ycv-EM-EgW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="yIs-2p-Oj2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="indicator" destination="VqK-Ct-1la" id="htf-As-EGk"/>
+                        <outlet property="tableView" destination="Ycv-EM-EgW" id="UqQ-R9-kjW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="38.23088455772114"/>
+        </scene>
+    </scenes>
+</document>
