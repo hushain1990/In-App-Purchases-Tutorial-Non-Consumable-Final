@@ -23,6 +23,13 @@ class ViewController: UIViewController {
         self.tableView.tableFooterView = UIView(frame: CGRect(origin: CGPoint(), size: CGSize.init(width: UIScreen.main.bounds.size.width, height: 0.0001)))
         
         
+        //This way whenever the products gets loaded we get a notification
+        NotificationCenter.default.addObserver(self, selector: #selector(self.SKProductsDidLoadFromStore), name: NSNotification.Name.init("SKProductsHaveLoaded"), object: nil)
+        
+        //Let's call the SKProductsDidLoadFromStore anyway when the viewDidload in case the products are loaded before we get here
+        
+        self.SKProductsDidLoadFromStore()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -34,8 +41,24 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.indicator.stopAnimating()
-        self.tableView.isHidden = false
+           }
+    
+    
+    func SKProductsDidLoadFromStore(){
+        
+       //Now we want to update the tableview after we have our products
+        
+        //We should update it inside a Dispatch closure on the main thread
+        
+        DispatchQueue.main.async {
+        
+            self.indicator.stopAnimating()
+            self.tableView.isHidden = false
+    
+            
+            self.tableView.reloadData()
+        }
+        
     }
     
     
@@ -74,7 +97,8 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
     //Number of rows in section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 3
+        //Let's feed our tableView with number of loaded products
+        return StoreManager.shared.productsFromStore.count
         
         
     }
@@ -82,10 +106,14 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
     //Cell for row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        
+        let product = StoreManager.shared.productsFromStore[indexPath.row]
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProductTableViewCell
         
-        cell.productName.text = "Cras mattis consectetur purus sit amet fermentum."
-        cell.productDescription.text = "Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet."
+        cell.productName.text = product.localizedTitle
+        cell.productDescription.text = product.localizedDescription
         
         cell.productStatus.index = indexPath
         cell.productStatus.addTarget(self, action: #selector(self.didTapCellButton(sender:)), for: UIControlEvents.touchUpInside)

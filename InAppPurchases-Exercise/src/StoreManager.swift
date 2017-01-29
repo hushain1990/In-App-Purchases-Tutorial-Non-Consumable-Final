@@ -32,7 +32,7 @@ class StoreManager: NSObject {
     
     //Let's create an array to hold our productsID
     
-    let purchasableProductsIds = ["super_credits_1000"] //For now we only have one product
+    let purchasableProductsIds:Set<String> = ["super_credits_1000"] //For now we only have one product
     
     
     
@@ -41,6 +41,13 @@ class StoreManager: NSObject {
     func setup(){
         
         //In order to display the products for the user, the first thing we need to is to request our SKProduct from the store so we can show the product in our app and make it available for the user to purchase.
+        
+        
+        //Let's load the products when we call the setup method
+        
+        //We should call our setup method when the app launches and the best place will be in AppDelegate
+        
+        self.requestProducts(ids: self.purchasableProductsIds)
         
         
     }
@@ -99,6 +106,11 @@ extension StoreManager:SKProductsRequestDelegate{
             
             print("Products now found")
         }
+        
+        
+        //Let's post a notification when our products have loaded so we can load them inside our tabelview
+        NotificationCenter.default.post(name: NSNotification.Name.init("SKProductsHaveLoaded"), object: nil)
+        
         
         
         
