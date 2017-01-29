@@ -21,8 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Start the StoreManager Class
         StoreManager.shared.setup()
         
-        
-        
         return true
     }
 

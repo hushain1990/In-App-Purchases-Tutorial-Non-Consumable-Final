@@ -50,6 +50,12 @@ class StoreManager: NSObject {
         self.requestProducts(ids: self.purchasableProductsIds)
         
         
+        
+        
+        //We need to become the delegate for the SKPaymentTransaction
+        
+        SKPaymentQueue.default().add(self)
+        
     }
     
     
@@ -135,91 +141,124 @@ extension StoreManager:SKProductsRequestDelegate{
 
 
 
+//We also need to implement the delegate methods for the SKPaymentTransactionObserver
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Let's impelement StoreKit delegate methods
 
 extension StoreManager:SKPaymentTransactionObserver{
     
+    //Two methods we will be interested in:
     
-    //This method will be called whenever there is update from the store about the product transaction
-    //Even after resatrting the app and open it again you will still get this method called if there is a pending transaction
     
+    //This mehtod will be called whenever there is an update from the store about a product or subscription etc...
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-    
-        //As you can see there are transactions array that we need to loop through and check for the transactions status
+        
+        //As you can see there are transactions and we need to loop through them in order to see what each transaction has for status
         
         for transaction in transactions{
             
             
+            
             switch transaction.transactionState {
             case .purchased:
-                self.transactionCompleted(trnasaction: transaction)
-            
+                self.purchaseCompleted(transaction: transaction)
             case .failed:
-                break
-                
-                
+                self.purchaseFailed(transaction: transaction)
             case .restored:
+                self.purchaseRestored(transaction: transaction)
+            case .purchasing,.deferred:
+                print("Pending")
                 
+            }
+        }
+        
+        
+        
+    }
+    
+    //We will use it in future
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        
+    }
+    
+    //Let's implement different function for each state
+    
+    func purchaseCompleted(transaction:SKPaymentTransaction){
+        
+        self.unlockContentForTransaction(trans: transaction)
+        
+        //Only after we have unlocked the content for the user
+        SKPaymentQueue.default().finishTransaction(transaction)
+        
+    }
+    
+    func purchaseFailed(transaction:SKPaymentTransaction){
+        
+        //In case of failed we need to check why it failed
+        
+        if let error = transaction.error as? SKError{
+            
+            switch error {
+            case SKError.clientInvalid:
+                print("User not allowed to make a payment request")
+            case SKError.unknown:
+                print("Unkown error while proccessing SKPayment")
+            case SKError.paymentCancelled:
+                print("User cancaled the payment request (Cancel)")
+                
+            case SKError.paymentInvalid:
+                print("The purchase id was not valid")
+                
+            case SKError.paymentNotAllowed:
+                print("This device is not allowed to make payments")
+                
+            default:
                 break
-            case .deferred,.purchasing:
-                
-                print("pending")
-                
-           
             }
             
         }
         
+        //Only after we have unlocked the content for the user
+        SKPaymentQueue.default().finishTransaction(transaction)
         
+    }
+    
+    func purchaseRestored(transaction:SKPaymentTransaction){
+        
+        self.unlockContentForTransaction(trans: transaction)
+        
+        //Only after we have unlocked the content for the user
+        SKPaymentQueue.default().finishTransaction(transaction)
     }
     
     
     
-    //Now let's create seperated method for each state so we can handle each state separately
+    //This function will unlock whatever the transaction have for product ID
     
-    
-    func transactionCompleted(trnasaction:SKPaymentTransaction){
+    func unlockContentForTransaction(trans:SKPaymentTransaction){
         
-        
-    }
-    
-    func transactionFailed(trnasaction:SKPaymentTransaction){
-        
-        
-    }
-    
-    func transactionRestored(trnasaction:SKPaymentTransaction){
-        
-        
+        print("Should unlock the content for product ID",trans.payment.productIdentifier)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
