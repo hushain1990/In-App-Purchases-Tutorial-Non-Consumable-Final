@@ -23,6 +23,38 @@ class ViewController: UIViewController {
         self.tableView.tableFooterView = UIView(frame: CGRect(origin: CGPoint(), size: CGSize.init(width: UIScreen.main.bounds.size.width, height: 0.0001)))
         
         
+        //First thing we need to show the product which we loaded from iTunes connect in order for us to buy it
+        
+        //In the previous video we used post notification whenever the products are done loading from the server
+        
+        //Let's add an observer so we get notifed whenever the products get loaded
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.SKProductsDidLoadFromiTunes), name: NSNotification.Name.init("SKProductsHaveLoaded"), object: nil)
+        
+        
+        
+        //We need also to call the function anyway when the view did load in case the products got loaded before our oberver is added
+        
+        SKProductsDidLoadFromiTunes()
+    }
+    
+    
+    func SKProductsDidLoadFromiTunes(){
+        
+        
+        //Now we need to update the table since we have the products ready
+        
+        //We need to use the main thread when updating the UI
+        
+        DispatchQueue.main.async {
+            
+            self.indicator.stopAnimating()
+            self.tableView.isHidden = false
+            
+            self.tableView.reloadData()
+        }
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -34,8 +66,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.indicator.stopAnimating()
-        self.tableView.isHidden = false
+        
     }
     
     
@@ -47,7 +78,9 @@ class ViewController: UIViewController {
         
         let index = sender.index
         
+        let product = StoreManager.shared.productsFromStore[index!.row]
         
+        StoreManager.shared.buy(product: product)
         
     }
 }
@@ -74,7 +107,8 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
     //Number of rows in section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 3
+        //Let's feed our table with the number of products
+        return StoreManager.shared.productsFromStore.count
         
         
     }
@@ -82,10 +116,24 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
     //Cell for row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        
+        let product  = StoreManager.shared.productsFromStore[indexPath.row]
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProductTableViewCell
         
-        cell.productName.text = "Cras mattis consectetur purus sit amet fermentum."
-        cell.productDescription.text = "Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet."
+        cell.productName.text = product.localizedTitle
+        cell.productDescription.text = product.localizedDescription
+        
+        
+        //You should always use NumberFormatter for the price in order to show the correct price currency
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = product.priceLocale
+        
+        
+        cell.productPrice.text = formatter.string(from: product.price)
         
         cell.productStatus.index = indexPath
         cell.productStatus.addTarget(self, action: #selector(self.didTapCellButton(sender:)), for: UIControlEvents.touchUpInside)

@@ -9,6 +9,11 @@
 import Foundation
 import StoreKit
 
+enum ProductType:String{
+    
+    case consumable
+}
+
 
 class StoreManager: NSObject {
 
@@ -35,6 +40,10 @@ class StoreManager: NSObject {
     let purchasableProductsIds:Set<String> = ["super_credits_1000"] //For now we only have one product
     
     
+    
+    //We cloud have an array for every product type so we can check later
+    
+    let consumablesProductsIds:Set<String> = ["super_credits_1000"]
     
     //Let's create our first call method 
     
@@ -137,6 +146,18 @@ extension StoreManager:SKProductsRequestDelegate{
     }
     
     
+    
+    //Let's implement our buy method so we can pass it whatever SKProduct we want to purchase
+    
+    func buy(product:SKProduct){
+        
+        let payment = SKPayment(product: product)
+        
+        SKPaymentQueue.default().add(payment)
+        
+        print("Buying product: ",product.productIdentifier)
+    }
+    
 }
 
 
@@ -237,7 +258,25 @@ extension StoreManager:SKPaymentTransactionObserver{
     func unlockContentForTransaction(trans:SKPaymentTransaction){
         
         print("Should unlock the content for product ID",trans.payment.productIdentifier)
+        
+        
+        //Now we need to implement whatever code required to unlock the content the user purchased
+        
+        
+        //if Consumables
+        if self.consumablesProductsIds.contains(trans.payment.productIdentifier){
+            
+            //If the product is 1000 credit sicen we can have more than one product
+            if trans.payment.productIdentifier == "super_credits_1000"{
+                
+                    print("1000 credits has been added to your account")
+            }
+        }
+        
     }
+    
+    
+    
 }
 
 
