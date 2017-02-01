@@ -14,6 +14,7 @@
 		DC26EC3D1E36886D008DFA3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC26EC3B1E36886D008DFA3F /* LaunchScreen.storyboard */; };
 		DC26EC4A1E3696FC008DFA3F /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC26EC481E3696FC008DFA3F /* ProductTableViewCell.swift */; };
 		DC26EC4B1E3696FC008DFA3F /* ProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC26EC491E3696FC008DFA3F /* ProductTableViewCell.xib */; };
+		DC64C07C1E41FC1500595C38 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = DC64C07B1E41FC1500595C38 /* README.md */; };
 		DCADFA8E1E3D48CF00803597 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCADFA8D1E3D48CF00803597 /* CustomButton.swift */; };
 		DCADFA901E3D4C5C00803597 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCADFA8F1E3D4C5C00803597 /* StoreManager.swift */; };
 		DCD687E01E37AA0500E78F36 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD687DF1E37AA0500E78F36 /* StoreKit.framework */; };
@@ -29,6 +30,7 @@
 		DC26EC3E1E36886D008DFA3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC26EC481E3696FC008DFA3F /* ProductTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 		DC26EC491E3696FC008DFA3F /* ProductTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductTableViewCell.xib; sourceTree = "<group>"; };
+		DC64C07B1E41FC1500595C38 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCADFA8D1E3D48CF00803597 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomButton.swift; path = src/views/CustomButton.swift; sourceTree = "<group>"; };
 		DCADFA8F1E3D4C5C00803597 /* StoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoreManager.swift; path = src/StoreManager.swift; sourceTree = "<group>"; };
 		DCD687DF1E37AA0500E78F36 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -49,6 +51,7 @@
 		DC26EC261E36886D008DFA3F = {
 			isa = PBXGroup;
 			children = (
+				DC64C07B1E41FC1500595C38 /* README.md */,
 				DC26EC311E36886D008DFA3F /* InAppPurchases-Exercise */,
 				DC26EC301E36886D008DFA3F /* Products */,
 				DC26EC4E1E36BF08008DFA3F /* Frameworks */,
@@ -167,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC64C07C1E41FC1500595C38 /* README.md in Sources */,
 				DC26EC4A1E3696FC008DFA3F /* ProductTableViewCell.swift in Sources */,
 				DC26EC351E36886D008DFA3F /* ViewController.swift in Sources */,
 				DCADFA901E3D4C5C00803597 /* StoreManager.swift in Sources */,

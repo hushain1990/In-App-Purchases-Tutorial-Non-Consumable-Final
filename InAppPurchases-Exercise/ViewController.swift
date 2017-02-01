@@ -32,10 +32,24 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.SKProductsDidLoadFromiTunes), name: NSNotification.Name.init("SKProductsHaveLoaded"), object: nil)
         
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.StoreManagerDidPurchaseNonConsumable(notification:)), name: NSNotification.Name.init("DidPurchaseNonConsumableProductNotification"), object: nil)
         
         //We need also to call the function anyway when the view did load in case the products got loaded before our oberver is added
         
         SKProductsDidLoadFromiTunes()
+    }
+    
+    func StoreManagerDidPurchaseNonConsumable(notification:Notification){
+        
+        guard let id = notification.userInfo?["id"] else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+        self.tableView.reloadData()
+        }
+        
+        
     }
     
     
@@ -138,9 +152,18 @@ extension ViewController:UITableViewDelegate,UITableViewDataSource{
         cell.productStatus.index = indexPath
         cell.productStatus.addTarget(self, action: #selector(self.didTapCellButton(sender:)), for: UIControlEvents.touchUpInside)
         
+        
+        
+        //Let's change the button from Buy to Purchased and change the color as well when the item is already purchased
+        
+        if StoreManager.shared.isPurchased(id: product.productIdentifier){
+            
+            cell.productStatus.setTitle("Purchased", for: .normal)
+            cell.productStatus.setTitleColor(UIColor.green, for: .normal)
+        }
+        
+        
         return cell
-        
-        
     }
     
     

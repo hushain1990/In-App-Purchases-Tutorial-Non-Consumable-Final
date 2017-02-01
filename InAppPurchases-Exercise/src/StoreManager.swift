@@ -9,11 +9,6 @@
 import Foundation
 import StoreKit
 
-enum ProductType:String{
-    
-    case consumable
-}
-
 
 class StoreManager: NSObject {
 
@@ -37,13 +32,19 @@ class StoreManager: NSObject {
     
     //Let's create an array to hold our productsID
     
-    let purchasableProductsIds:Set<String> = ["super_credits_1000"] //For now we only have one product
+    let purchasableProductsIds:Set<String> = ["super_credits_1000","com.swiftylab.unlock_backup_feature"] //For now we only have one product
     
     
     
     //We cloud have an array for every product type so we can check later
     
     let consumablesProductsIds:Set<String> = ["super_credits_1000"]
+    
+    
+    //let's create an array for non-consumables
+    
+    let nonConsumablesProductsIds:Set<String> = ["com.swiftylab.unlock_backup_feature"];
+    
     
     //Let's create our first call method 
     
@@ -158,6 +159,15 @@ extension StoreManager:SKProductsRequestDelegate{
         print("Buying product: ",product.productIdentifier)
     }
     
+    
+    
+    //Let's impelement the restore purchases method
+    
+    
+    func restoreAllPurchases(){
+        
+        SKPaymentQueue.default().restoreCompletedTransactions()
+    }
 }
 
 
@@ -199,6 +209,12 @@ extension StoreManager:SKPaymentTransactionObserver{
     //We will use it in future
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         
+       print("Restord finished processing all completed transactions")
+    }
+    
+    
+    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        print("Error restoring transactions",error.localizedDescription)
     }
     
     //Let's implement different function for each state
@@ -273,6 +289,21 @@ extension StoreManager:SKPaymentTransactionObserver{
             }
         }
         
+        
+        
+        //if Non-Consumables
+        if self.nonConsumablesProductsIds.contains(trans.payment.productIdentifier){
+            
+            //Here we should save the product id to UserDefaults so we can check later 
+            self.savePurchasedProduct(id: trans.payment.productIdentifier)
+            
+            
+            //Now we will post a notification so we can tell when the purchase process of Non-Consumable product is done so we can update our UI the table view and show Purchased instead of buy
+            
+            NotificationCenter.default.post(name: NSNotification.Name.init("DidPurchaseNonConsumableProductNotification"), object: nil, userInfo: ["id":trans.payment.productIdentifier])
+            
+        }
+        
     }
     
     
@@ -283,7 +314,24 @@ extension StoreManager:SKPaymentTransactionObserver{
 
 
 
-
+extension StoreManager{
+    
+    
+    func savePurchasedProduct(id:String){
+        
+        //This way we save it as Bool value so we can if it has purchased or not
+        UserDefaults.standard.set(true, forKey: id)
+        
+        
+        //Usually it's saved inside a dictionary or an array but for since we dont have so many purchasble items this is fine for now
+    }
+    
+    
+    func isPurchased(id:String)->Bool{
+        
+        return UserDefaults.standard.bool(forKey: id)
+    }
+}
 
 
 
