@@ -299,7 +299,7 @@
 				DEVELOPMENT_TEAM = M29RC2Y5P3;
 				INFOPLIST_FILE = "InAppPurchases-Exercise/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nebulahus.glist;
+				PRODUCT_BUNDLE_IDENTIFIER = "YOUR-BUDNLE-ID";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -312,7 +312,7 @@
 				DEVELOPMENT_TEAM = M29RC2Y5P3;
 				INFOPLIST_FILE = "InAppPurchases-Exercise/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nebulahus.glist;
+				PRODUCT_BUNDLE_IDENTIFIER = "YOUR-BUDNLE-ID";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
